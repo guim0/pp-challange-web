@@ -12,7 +12,6 @@ export default function Sidebar() {
           max-width: 256px;
           width: 100%;
           height: 100vh;
-
           border: 1px solid #eaefed;
           background-color: white;
           box-shadow: 0px 4px 8px rgba(165, 171, 179, 0.16);
@@ -34,7 +33,7 @@ export default function Sidebar() {
       <section
         className={css`
           width: 100%;
-          height: 72px;
+          height: 75px;
           padding: 20px;
           border-bottom: 1px solid #eaefed;
           background-color: white;
@@ -46,7 +45,8 @@ export default function Sidebar() {
       >
         <User>
           <UserLogo>LZ</UserLogo>
-          <div className={css``}>
+          <div className={css`
+          line-height: 17px;`}>
             <span
               className={css`
                 color: #34423d;
@@ -54,7 +54,7 @@ export default function Sidebar() {
               `}
             >
               Luiz Zlochevsky
-            </span>{" "}
+            </span>
             <br />
             <span
               className={css`
@@ -74,6 +74,12 @@ const Container = styled.main`
   margin: 0 auto;
   display: flex;
   flex-direction: row;
+  position: fixed;
+z-index: -99;
+  top: 0 !important;
+
+  width: 100%;
+
 `;
 
 const User = styled.div`

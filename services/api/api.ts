@@ -1,13 +1,8 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
+import axios, { AxiosResponse, AxiosError } from "axios";
 
-type Data = {
-  name: string
-}
-
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
-  res.status(200).json({ name: 'John Doe' })
-}
+export const getAgents = async (res: AxiosResponse) => {
+  await axios.get("https://pp-api-desafio.herokuapp.com/agents").then((res) => {
+    res.data;
+  });
+   
+};

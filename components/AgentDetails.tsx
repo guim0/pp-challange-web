@@ -30,21 +30,21 @@ export function AgentDetails({
     <Container>
       <Details status={status}>
         <li>
-          <div className={styling`display: flex; align-items: center;gap: 8px`}>
+          <div className={styling`display: flex; align-items: center;gap: 8px; max-width:180px`}>
             <Image
               className={styling`border-radius:25px;`}
               src={userPhoto}
               width={40}
               height={40}
-            />{" "}
-            <p className={styling`width:60%`}>{userName}</p>
+            />
+            <p className={styling`max-width: 180px`}>{userName}</p>
           </div>
         </li>
         <li>
           <span>{department}</span>
         </li>
         <li>{position}</li>
-        <li className={styling`width:60%`}>{unit}</li>
+        <li className={styling`max-width: 180px`}>{unit}</li>
         <li>
           <BadgeStatus status={status} />
         </li>
@@ -68,7 +68,7 @@ const Details = styled.ul<AgentDetailsProps>(
       display: grid;
       margin-left: -35px;
       grid-template-columns: 1.5fr 1.1fr 1fr 1.1fr 1fr;
-      list-style: none;
+      list-style: none !important;
       align-items: center;
       ${status === "inactive"
         ? " li {  filter: grayscale(2) opacity(0.4);}"

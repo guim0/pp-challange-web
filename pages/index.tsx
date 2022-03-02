@@ -8,9 +8,8 @@ import { AgentDetails } from "../components/AgentDetails";
 import Sidebar from "../components/Sidebar";
 
 interface OrganizationProps {
-  isActive: boolean;
+  isActive?: boolean;
 }
-
 interface ItemsAgentsDetails {
   items: GetAgentsDetails[];
 }
@@ -28,6 +27,7 @@ interface GetAgentsDetails {
 const Home: NextPage = () => {
   const [organizationStatus, setOrganizationStatus] = useState<boolean>(false);
   const [agents, getAgents] = useState<ItemsAgentsDetails>();
+  const [homePage, setHomePage] = useState<string>("agents");
 
   useEffect(() => {
     const fetchAgents = async () => {
@@ -40,67 +40,115 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <section className={css` position:relative;z-index:1;  background-color: #F8FAF9;`}>
+    <main
+      className={css`
+        position: relative;
+        z-index: 1;
+        background-color: #f8faf9;
+      `}
+    >
       <Sidebar />
-      <div
-        className={css`
-          margin: 0 23vw;
-          padding-top: 90px;
-          width: 75%;
-          height: 100vh;
-          overflow-y: hidden;
-        
-        `}
-      >
-        <h1>Organização</h1>
-        <OrganizationContainer>
-          <section
-            className={css`
-              width: 100%;
-              border-bottom: 2.5px solid #eaefed;
-            `}
-          >
+
+      {homePage === "agents" ? (
+        <section
+          className={css`
+            margin: 0 23vw;
+            padding-top: 90px;
+            width: 75%;
+            height: 100vh;
+            overflow-y: hidden;
+          `}
+        >
+          <h1>Organização</h1>
+          <OrganizationContainer>
             <div
               className={css`
-                display: flex;
-                gap: 5px;
+                width: 100%;
+                border-bottom: 2.5px solid #eaefed;
               `}
             >
-              <Agents isActive={organizationStatus}>
-                <span>Colaboradores</span>
-              </Agents>
-              <Positions isActive={true}>
-                <span>Cargos</span>
-              </Positions>
+              <div
+                className={css`
+                  display: flex;
+                  gap: 5px;
+                `}
+              >
+                <Agents onClick={() => setHomePage("agents")}  isActive={homePage === "agents" ?? true}>
+                  <span>Colaboradores</span>
+                </Agents>
+                <Positions onClick={() => setHomePage("roles")} isActive={homePage === "roles" ?? true}>
+                  <span>Cargos</span>
+                </Positions>
+              </div>
             </div>
-          </section>
 
-          <ListingOfAgents>
-            <h4>Listagem de colaboradores</h4>
-            <ListingOfAgentsDetails>
-              <li>Nome Completo</li>
-              <li>Departamento</li>
-              <li>Cargo</li>
-              <li>Unidade</li>
-              <li>Status</li>
-            </ListingOfAgentsDetails>
-             {agents?.items === undefined ? 
-             ( <>Um minuto...</>) : (
-            agents?.items?.map((item) => (
-              <AgentDetails
-                userPhoto={item?.image}
-                userName={item?.name}
-                department={item?.department}
-                position={item?.role}
-                unit={item?.branch}
-                status={item?.status}
-              />
-
-            )))}
-          </ListingOfAgents>
-        </OrganizationContainer>
-      </div>
-    </section>
+            <ListingOfAgents>
+              <h4>Listagem de colaboradores</h4>
+              <ListingOfAgentsDetails>
+                <li>Nome Completo</li>
+                <li>Departamento</li>
+                <li>Cargo</li>
+                <li>Unidade</li>
+                <li>Status</li>
+              </ListingOfAgentsDetails>
+              {agents?.items === undefined ? (
+                <>Um minuto...</>
+              ) : (
+                agents?.items?.map((item) => (
+                  <AgentDetails
+                    userPhoto={item?.image}
+                    userName={item?.name}
+                    department={item?.department}
+                    position={item?.role}
+                    unit={item?.branch}
+                    status={item?.status}
+                  />
+                ))
+              )}
+            </ListingOfAgents>
+          </OrganizationContainer>
+        </section>
+      ) : (
+        <section
+          className={css`
+            margin: 0 23vw;
+            padding-top: 90px;
+            width: 75%;
+            height: 100vh;
+            overflow-y: hidden;
+          `}
+        >
+          <h1>Organização</h1>
+          <OrganizationContainer>
+            <div
+              className={css`
+                width: 100%;
+                border-bottom: 2.5px solid #eaefed;
+              `}
+            >
+              <div
+                className={css`
+                  display: flex;
+                  gap: 5px;
+                `}
+              >
+                <Agents
+                  onClick={() => setHomePage("agents")}
+                  isActive={organizationStatus}
+                >
+                  <span>Colaboradores</span>
+                </Agents>
+                <Positions onClick={() => setHomePage("roles")} isActive={true}>
+                  <span>Cargos</span>
+                </Positions>
+              </div>
+            </div>
+            <ListingOfRoles> cargos </ListingOfRoles>
+            
+          </OrganizationContainer>
+        </section>
+      )}
+    </main>
   );
 };
 
@@ -156,19 +204,17 @@ const ListingOfAgents = styled.section`
   height: 60vh;
   padding-right: 20px;
   ::-webkit-scrollbar {
-    width: 8px; 
-  
+    width: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    background: #ffffff; 
+    background: #ffffff;
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: #22E0A1; 
-    border-radius: 20px; 
+    background-color: #22e0a1;
+    border-radius: 20px;
     border: none;
-   
   }
 `;
 
@@ -186,3 +232,11 @@ const ListingOfAgentsDetails = styled.ul`
     padding-left: 40px;
   }
 `;
+const ListingOfRoles = styled.div`
+ margin: 0 auto;
+  width: 100%;
+  background: #ffffff;
+  padding: 40px;
+  height: 100vh;
+  box-shadow: 0px 4px 8px rgba(165, 171, 179, 0.16);
+  border-radius: 8px;`

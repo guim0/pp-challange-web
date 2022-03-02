@@ -1,6 +1,9 @@
+import { css as styling } from "@emotion/css";
 import Image from "next/image";
-import styled from "styled-components";
+import React from "react";
+import styled, { css } from "styled-components";
 import { BadgeStatus } from "./BadgeStatus";
+import MoreIcon from '../assets/icons/more.svg'
 
 interface AgentDetailsProps {
   userPhoto: string;
@@ -9,6 +12,10 @@ interface AgentDetailsProps {
   position: string;
   unit: string;
   status: string;
+}
+
+interface ModalProps {
+  isVisible: boolean;
 }
 
 export function AgentDetails({
@@ -21,31 +28,52 @@ export function AgentDetails({
 }: AgentDetailsProps) {
   return (
     <Container>
-      <Details>
+      <Details status={status}>
         <li>
-          <div>
-            <Image src={userPhoto} /> <p>{userName}</p>
+          <div className={styling`display: flex; align-items: center;gap: 8px`}>
+            <Image
+              className={styling`border-radius:25px;`}
+              src={userPhoto}
+              width={40}
+              height={40}
+            />{" "}
+            <p className={styling`width:60%`}>{userName}</p>
           </div>
         </li>
         <li>
           <span>{department}</span>
         </li>
         <li>{position}</li>
-        <li>{unit}</li>
+        <li className={styling`width:60%`}>{unit}</li>
         <li>
           <BadgeStatus status={status} />
         </li>
       </Details>
+      <MoreButton isVisible={true}>
+        <Image src={MoreIcon} width={20} height={20} />
+      </MoreButton>
     </Container>
   );
 }
 
 const Container = styled.section`
   margin: 0 auto;
+  display: flex;
+  align-items: center;
 `;
 
-const Details = styled.ul`
-display: grid;
-grid-template-columns: 1.3fr 1.3fr 1.2fr 1.2fr 1.2fr;
+const Details = styled.ul<AgentDetailsProps>(
+  ({ status }) =>
+    css`
+      display: grid;
+      margin-left: -35px;
+      grid-template-columns: 1.5fr 1.1fr 1fr 1.1fr 1fr;
+      list-style: none;
+      align-items: center;
+      ${status === "inactive"
+        ? " li {  filter: grayscale(2) opacity(0.4);}"
+        : ""}
+    `
+);
 
-`
+const MoreButton = styled.div<ModalProps>(({ isVisible }) => css``);

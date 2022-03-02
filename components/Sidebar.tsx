@@ -77,7 +77,6 @@ const Container = styled.main`
   position: fixed;
 z-index: -99;
   top: 0 !important;
-
   width: 100%;
 
 `;

@@ -40,15 +40,16 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <>
+    <section className={css` position:relative;z-index:1;  background-color: #F8FAF9;`}>
       <Sidebar />
-      {console.log(agents)}
       <div
         className={css`
           margin: 0 23vw;
           padding-top: 90px;
           width: 75%;
           height: 100vh;
+          overflow-y: hidden;
+        
         `}
       >
         <h1>Organização</h1>
@@ -83,24 +84,23 @@ const Home: NextPage = () => {
               <li>Unidade</li>
               <li>Status</li>
             </ListingOfAgentsDetails>
-            {agents?.items.length === 0 ? (
-              <h3>Um minuto...</h3>
-            ) : (
-              agents?.items.map((items: any) => {
-                <AgentDetails
-                  userPhoto={items?.items?.image}
-                  userName={items?.items?.name}
-                  department={items?.items?.department}
-                  position={items?.items?.role}
-                  unit={items?.items?.branch}
-                  status={items?.items?.status}
-                />;
-              })
-            )}
+             {agents?.items === undefined ? 
+             ( <>Um minuto...</>) : (
+            agents?.items?.map((item) => (
+              <AgentDetails
+                userPhoto={item?.image}
+                userName={item?.name}
+                department={item?.department}
+                position={item?.role}
+                unit={item?.branch}
+                status={item?.status}
+              />
+
+            )))}
           </ListingOfAgents>
         </OrganizationContainer>
       </div>
-    </>
+    </section>
   );
 };
 
@@ -111,7 +111,7 @@ const OrganizationContainer = styled.section`
   width: 100%;
   background: #ffffff;
   padding: 40px;
-  height: 70vh;
+  height: 100vh;
   box-shadow: 0px 4px 8px rgba(165, 171, 179, 0.16);
   border-radius: 8px;
 `;
@@ -151,7 +151,26 @@ const Positions = styled.div<OrganizationProps>(
       }
     `
 );
-const ListingOfAgents = styled.section``;
+const ListingOfAgents = styled.section`
+  overflow-y: scroll;
+  height: 60vh;
+  padding-right: 20px;
+  ::-webkit-scrollbar {
+    width: 8px; 
+  
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #ffffff; 
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #22E0A1; 
+    border-radius: 20px; 
+    border: none;
+   
+  }
+`;
 
 const ListingOfAgentsDetails = styled.ul`
   border: 1px solid #cad6d1;
@@ -160,7 +179,7 @@ const ListingOfAgentsDetails = styled.ul`
   list-style: none;
   padding: 12px;
   display: grid;
-  grid-template-columns: 1.3fr 1.3fr 1.2fr 1.2fr 1.2fr;
+  grid-template-columns: 1.5fr 1.1fr 1fr 1.1fr 1.3fr;
   li {
     text-align: left;
     margin-left: -39px;

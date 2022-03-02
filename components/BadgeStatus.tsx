@@ -18,10 +18,15 @@ export function BadgeStatus({ status }: BadgeStatusProps) {
 }
 
 const Container = styled.div<BadgeBehaviorProps>(({ isActive }) => css`
-background-color: ${isActive === 'active' ? '#B5F1DD' : '#EAEFED' };padding: 10px 5px;
-border-radius: 8px;
+background-color: ${isActive === 'active' ? '#B5F1DD' : '#EAEFED' };padding: 2px 5px;
+border-radius: 20px;
+max-width: 80px;
+text-align: center;
+
 `);
 
 const Title = styled.span`
 font-size: 14px;
+font-weight: 500;
+color: #34423D;
 `

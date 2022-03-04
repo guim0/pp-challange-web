@@ -6,52 +6,39 @@ import { BadgeStatus } from "./BadgeStatus";
 import MoreIcon from '../assets/icons/more.svg'
 
 interface AgentDetailsProps {
-  userPhoto: string;
   userName: string;
-  departments: string;
-  position: string;
-  unit: string;
-  status: string;
+  departament: string;
+  collaborators: number
 }
 
 interface ModalProps {
   isVisible: boolean;
 }
 
-export function AgentDetails({
-  userPhoto,
+export function RolesDetails({
   userName,
-  department,
-  position,
-  unit,
-  status,
+  departament,
+  collaborators
 }: AgentDetailsProps) {
   return (
     <Container>
-      <Details  status={status}>
+      <Details>
         <li>
           <div className={styling`display: flex; align-items: center;gap: 8px; max-width:180px`}>
-            <Image
-              className={styling`border-radius:25px;`}
-              src={userPhoto}
-              width={40}
-              height={40}
-            />
+
             <p className={styling`max-width: 180px`}>{userName}</p>
           </div>
         </li>
         <li>
-          <span>{department}</span>
+          <span className={styling`max-width: 180px`}>{departament}</span>
         </li>
-        <li>{position}</li>
-        <li className={styling`max-width: 180px`}>{unit}</li>
-        <li>
-          <BadgeStatus status={status} />
-        </li>
-      </Details>
+        <li> <span className={styling`max-width: 180px`}>{collaborators}</span></li>
+      
+     
       <MoreButton isVisible={true}>
         <Image src={MoreIcon} width={20} height={20} />
       </MoreButton>
+      </Details>
     </Container>
   );
 }
@@ -62,18 +49,16 @@ const Container = styled.section`
   align-items: center;
 `;
 
-const Details = styled.ul<AgentDetailsProps>(
-  ({ status }) =>
-    css`
-      display: grid;
+const Details = styled.ul`
+     display: grid ;
+     grid-template-columns: 8fr 8fr 8fr 1fr;
       margin-left: -35px;
-      grid-template-columns: 1.5fr 1.1fr 1fr 1.1fr 1fr;
+justify-content: space-between ;
+     width: 100% ;
       list-style: none !important;
+     
       align-items: center;
-      ${status === "inactive"
-        ? " li {  filter: grayscale(2) opacity(0.4);}"
-        : ""}
     `
-);
+
 
 const MoreButton = styled.div<ModalProps>(({ isVisible }) => css``);

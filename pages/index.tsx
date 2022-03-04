@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import styled, { css as scss } from "styled-components";
 import { AgentDetails } from "../components/AgentDetails";
+import { RolesDetails } from "../components/RolesDetails";
 import Sidebar from "../components/Sidebar";
 
 interface OrganizationProps {
@@ -24,19 +25,36 @@ interface GetAgentsDetails {
 }
 [];
 
+interface Roles {
+  roles: GetRolesDetails[];
+}
+interface GetRolesDetails {
+  name: string;
+  departament: string;
+  agents_quantity: 5;
+}
 const Home: NextPage = () => {
   const [organizationStatus, setOrganizationStatus] = useState<boolean>(false);
   const [agents, getAgents] = useState<ItemsAgentsDetails>();
+  const [roles, getRoles] = useState<Roles>();
   const [homePage, setHomePage] = useState<string>("agents");
 
   useEffect(() => {
     const fetchAgents = async () => {
       const res = await fetch("https://pp-api-desafio.herokuapp.com/agents");
-      const data = await res.json();
-      getAgents(data);
+      const dataAgents = await res.json();
+      getAgents(dataAgents);
+    };
+
+    const featchRoles = async () => {
+      const res = await fetch("https://pp-api-desafio.herokuapp.com/roles");
+      const dataRoles = await res.json();
+      getRoles(dataRoles);
     };
 
     fetchAgents();
+
+    featchRoles();
   }, []);
 
   return (
@@ -73,10 +91,16 @@ const Home: NextPage = () => {
                   gap: 5px;
                 `}
               >
-                <Agents onClick={() => setHomePage("agents")}  isActive={homePage === "agents" ?? true}>
+                <Agents
+                  onClick={() => setHomePage("agents")}
+                  isActive={homePage === "agents" ?? true}
+                >
                   <span>Colaboradores</span>
                 </Agents>
-                <Positions onClick={() => setHomePage("roles")} isActive={homePage === "roles" ?? true}>
+                <Positions
+                  onClick={() => setHomePage("roles")}
+                  isActive={homePage === "roles" ?? true}
+                >
                   <span>Cargos</span>
                 </Positions>
               </div>
@@ -143,8 +167,25 @@ const Home: NextPage = () => {
                 </Positions>
               </div>
             </div>
-            <ListingOfRoles> cargos </ListingOfRoles>
-            
+            <ListingOfAgents>
+              <h4>Listagem de colaboradores</h4>
+              <ListingOfRolesDetails>
+                <li>Cargo</li>
+                <li>Departamento</li>
+                <li>Colaboradores</li>
+              </ListingOfRolesDetails>
+              {agents?.items === undefined ? (
+                <>Um minuto...</>
+              ) : (
+                roles?.roles?.map((item) => (
+                  <RolesDetails
+                    userName={item?.name}
+                    departament={item?.departament}
+                    collaborators={item?.agents_quantity}
+                  />
+                ))
+              )}
+            </ListingOfAgents>
           </OrganizationContainer>
         </section>
       )}
@@ -232,11 +273,19 @@ const ListingOfAgentsDetails = styled.ul`
     padding-left: 40px;
   }
 `;
-const ListingOfRoles = styled.div`
- margin: 0 auto;
+
+const ListingOfRolesDetails = styled.ul`
+  border: 1px solid #cad6d1;
+  border-radius: 8px 8px 0px 0px;
   width: 100%;
-  background: #ffffff;
-  padding: 40px;
-  height: 100vh;
-  box-shadow: 0px 4px 8px rgba(165, 171, 179, 0.16);
-  border-radius: 8px;`
+  list-style: none;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: 5fr 5fr 7fr 1fr;
+  li {
+    text-align: left;
+    margin-left: -39px;
+    padding-left: 40px;
+  }
+`;
+

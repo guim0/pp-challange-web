@@ -1,6 +1,6 @@
 import { css } from "@emotion/css";
 import type { NextPage } from "next";
-
+import 'animate.css'
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import styled, { css as scss } from "styled-components";
@@ -41,7 +41,7 @@ const Home: NextPage = () => {
   const [roles, getRoles] = useState<Roles>();
   const [homePage, setHomePage] = useState<string>("agents");
   const [categoryChosen, setCategoryChosen] = useState<boolean>(false);
-  const [titleHome, setTitleHome] = useState<string>("Colaboradores");
+  const [titleHome, setTitleHome] = useState<string>("");
 
   useEffect(() => {
     const fetchAgents = async () => {
@@ -90,7 +90,7 @@ const Home: NextPage = () => {
             }
           `}
         >
-          <header
+          <TitleHomePage
             className={css`
               margin-left: 20px;
             `}
@@ -116,7 +116,7 @@ const Home: NextPage = () => {
             >
               {titleHome}
             </h1>
-          </header>
+          </TitleHomePage>
           <OrganizationContainer>
             <div
               className={css`
@@ -134,14 +134,14 @@ const Home: NextPage = () => {
                 `}
               >
                 <Agents
-                  onClick={() => setHomePage("agents")}
-                  isActive={homePage === "agents" ?? true}
+                  onClick={() => {setHomePage("agents")}}
+                  isActive={homePage === "agents" ?? true}  
                 >
                   <span>Colaboradores</span>
                 </Agents>
                 <Positions
-                  onClick={() => setHomePage("roles")}
-                  isActive={homePage !== "agents" ?? true}
+                  onClick={() =>{ setHomePage("roles")}}
+                  isActive={homePage !== "agents" ?? true}  
                 >
                   <span>Cargos</span>
                 </Positions>
@@ -227,7 +227,7 @@ const Home: NextPage = () => {
 
             <ListingOfAgents>
               <h4>Listagem de colaboradores</h4>
-              <ListingOfAgentsDetails>
+              <ListingOfAgentsDetails >
                 <li>Nome Completo</li>
                 <li>Departamento</li>
                 <li>Cargo</li>
@@ -238,6 +238,7 @@ const Home: NextPage = () => {
                 <>Um minuto...</>
               ) : (
                 agents?.items?.map((item) => (
+                  <div >
                   <AgentDetails
                     userPhoto={item?.image}
                     userName={item?.name}
@@ -246,6 +247,7 @@ const Home: NextPage = () => {
                     unit={item?.branch}
                     status={item?.status}
                   />
+                  </div>
                 ))
               )}
             </ListingOfAgents>
@@ -271,7 +273,7 @@ const Home: NextPage = () => {
             }
           `}
         >
-          <header
+          <TitleHomePage
             className={css`
               margin-left: 20px;
             `}
@@ -297,7 +299,7 @@ const Home: NextPage = () => {
             >
               {titleHome}
             </h1>
-          </header>
+          </TitleHomePage>
           <OrganizationContainer>
             <div
               className={css`
@@ -356,7 +358,8 @@ const Home: NextPage = () => {
                           margin-top: -70px;
                           position: relative;
                           z-index: 1;
-                        `}
+                          
+                        ` }
                       >
                         <div
                           className={css`
@@ -558,3 +561,5 @@ const Category = styled.option`
     cursor: pointer;
   }
 `;
+
+const TitleHomePage = styled.header``

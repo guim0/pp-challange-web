@@ -26,7 +26,7 @@ export function RolesDetails({
 
   return (
     <Container>
-      <Details>
+      <Details >
         <li>
           <div
             className={styling`display: flex; align-items: center;gap: 8px; max-width:180px`}

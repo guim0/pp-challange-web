@@ -14,6 +14,9 @@ interface AgentDetailsProps {
   unit: string;
   status: string;
 }
+interface StatusInfo{
+  status:string
+}
 
 interface ModalProps {
   isVisible: boolean;
@@ -89,7 +92,7 @@ export function AgentDetails({
         </div>
 
         {isOpen && (
-          <FullDetails status={status}>
+          <FullDetails status={status} >
             <li
               className={styling`max-width:120px;width:100%;display: flex; flex-direction: column; align-items: flex-start;text-align: left; font-size: 15px; line-height: 18px`}
             >
@@ -127,7 +130,7 @@ const Container = styled.section`
   align-items: center;
 `;
 
-const Details = styled.ul<AgentDetailsProps>(
+const Details = styled.ul<StatusInfo>(
   ({ status }) =>
     css`
       display: grid;
@@ -146,7 +149,7 @@ const Details = styled.ul<AgentDetailsProps>(
     `
 );
 
-const MoreButton = styled.div<ModalProps>(({ isVisible }) => css``);
+// const MoreButton = styled.div<ModalProps>(({ isVisible }) => css``);
 
 const DetailsMobile = styled.div`
   margin-bottom: 20px ;
@@ -177,7 +180,7 @@ const AgentPhoto = styled.img`
  
 `;
 
-const FullDetails = styled.ul<AgentDetailsProps>(
+const FullDetails = styled.ul<StatusInfo>(
   ({ status }) =>
     css`
       margin-left: -20px;

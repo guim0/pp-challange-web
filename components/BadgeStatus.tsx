@@ -22,6 +22,7 @@ background-color: ${isActive === 'active' ? '#B5F1DD' : '#EAEFED' };padding: 2px
 border-radius: 20px;
 max-width: 80px;
 text-align: center;
+width: 100% ;
 
 `);
 

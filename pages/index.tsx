@@ -1,11 +1,13 @@
 import { css } from "@emotion/css";
 import type { NextPage } from "next";
-import Head from "next/head";
+
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import styled, { css as scss } from "styled-components";
 import { AgentDetails } from "../components/AgentDetails";
 import { RolesDetails } from "../components/RolesDetails";
+import MoreIcon from "../assets/icons/more.svg";
+import X from "../assets/icons/x.svg";
 import Sidebar from "../components/Sidebar";
 
 interface OrganizationProps {
@@ -38,12 +40,15 @@ const Home: NextPage = () => {
   const [agents, getAgents] = useState<ItemsAgentsDetails>();
   const [roles, getRoles] = useState<Roles>();
   const [homePage, setHomePage] = useState<string>("agents");
+  const [categoryChosen, setCategoryChosen] = useState<boolean>(false);
+  const [titleHome, setTitleHome] = useState<string>("Colaboradores");
 
   useEffect(() => {
     const fetchAgents = async () => {
       const res = await fetch("https://pp-api-desafio.herokuapp.com/agents");
       const dataAgents = await res.json();
       getAgents(dataAgents);
+      console.log("dataAgents =>>", dataAgents);
     };
 
     const featchRoles = async () => {
@@ -64,30 +69,68 @@ const Home: NextPage = () => {
         background-color: #f8faf9;
       `}
     >
-
-
+      <Sidebar />
       {homePage === "agents" ? (
         <section
           className={css`
-            margin: 0 23vw;
+            margin: 0 22vw;
             padding-top: 90px;
             width: 75%;
             height: 100vh;
             overflow-y: hidden;
+
+            @media screen and (max-width: 1200px) {
+              margin: 0 auto;
+            }
+            @media screen and (max-width: 1200px) {
+              width: 100%;
+              margin-bottom: 100;
+
+              padding-bottom: 100px;
+            }
           `}
         >
-          <h1>Organização</h1>
+          <header
+            className={css`
+              margin-left: 20px;
+            `}
+          >
+            <h1
+              className={css`
+                @media screen and (max-width: 1200px) {
+                  display: none;
+                }
+              `}
+            >
+              Organização
+            </h1>
+            <h1
+              className={css`
+                @media screen and (min-width: 1200px) {
+                  display: none;
+                }
+                @media screen and (max-width: 1200px) {
+                  display: block;
+                }
+              `}
+            >
+              {titleHome}
+            </h1>
+          </header>
           <OrganizationContainer>
             <div
               className={css`
                 width: 100%;
-                border-bottom: 2.5px solid #eaefed;
               `}
             >
               <div
                 className={css`
                   display: flex;
                   gap: 5px;
+                  border-bottom: 3px solid #eaefed;
+                  @media screen and (max-width: 1200px) {
+                    display: none;
+                  }
                 `}
               >
                 <Agents
@@ -98,12 +141,89 @@ const Home: NextPage = () => {
                 </Agents>
                 <Positions
                   onClick={() => setHomePage("roles")}
-                  isActive={homePage === "roles" ?? true}
+                  isActive={homePage !== "agents" ?? true}
                 >
                   <span>Cargos</span>
                 </Positions>
               </div>
             </div>
+            <MobileChooseCategory>
+              <CategoryChoose>
+                <div
+                  className={css`
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 15px;
+                    width: 100%;
+                    border-radius: 9px;
+                    border: 2px solid #cad6d1;
+                    background: #ffffff;
+                    color: #34423d;
+                    :hover {
+                      cursor: pointer;
+                    }
+                  `}
+                  onClick={() => setCategoryChosen(true)}
+                >
+                  Categorias <Image src={MoreIcon} />
+                </div>
+                {categoryChosen && (
+                  <>
+                    <div
+                      className={css`
+                        background: #ffffff;
+                        box-shadow: 0px 8px 24px rgba(165, 171, 179, 0.4);
+                        border-radius: 12px 12px 0px 0px;
+                        padding: 20px 20px;
+                        margin-top: -70px;
+                        position: relative;
+                        z-index: 1;
+                      `}
+                    >
+                      <div
+                        className={css`
+                          display: flex;
+                          width: 100%;
+                          align-items: center;
+                          justify-content: space-between;
+                        `}
+                      >
+                        <h1>Categorias</h1>
+                        <div
+                          className={css`
+                            padding: 5px 30px;
+
+                            :hover {
+                              cursor: pointer;
+                            }
+                          `}
+                          onClick={() => setCategoryChosen(false)}
+                        >
+                          <Image src={X} />
+                        </div>
+                      </div>
+                      <div>
+                        <Category
+                          onClick={() => {
+                            setTitleHome("Colaboradores"),
+                              setHomePage("agents");
+                          }}
+                        >
+                          Colaboradores
+                        </Category>
+                        <Category
+                          onClick={() => {
+                            setTitleHome("Cargos"), setHomePage("roles");
+                          }}
+                        >
+                          Cargos
+                        </Category>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </CategoryChoose>
+            </MobileChooseCategory>
 
             <ListingOfAgents>
               <h4>Listagem de colaboradores</h4>
@@ -134,25 +254,65 @@ const Home: NextPage = () => {
       ) : (
         <section
           className={css`
-            margin: 0 23vw;
+            margin: 0 22vw;
             padding-top: 90px;
             width: 75%;
             height: 100vh;
             overflow-y: hidden;
+
+            @media screen and (max-width: 1200px) {
+              margin: 0 auto;
+            }
+            @media screen and (max-width: 1200px) {
+              width: 100%;
+              margin-bottom: 100;
+
+              padding-bottom: 100px;
+            }
           `}
         >
-          <h1>Organização</h1>
+          <header
+            className={css`
+              margin-left: 20px;
+            `}
+          >
+            <h1
+              className={css`
+                @media screen and (max-width: 1200px) {
+                  display: none;
+                }
+              `}
+            >
+              Organização
+            </h1>
+            <h1
+              className={css`
+                @media screen and (min-width: 1200px) {
+                  display: none;
+                }
+                @media screen and (max-width: 1200px) {
+                  display: block;
+                }
+              `}
+            >
+              {titleHome}
+            </h1>
+          </header>
           <OrganizationContainer>
             <div
               className={css`
                 width: 100%;
-                border-bottom: 2.5px solid #eaefed;
               `}
             >
               <div
                 className={css`
                   display: flex;
                   gap: 5px;
+
+                  border-bottom: 3px solid #eaefed;
+                  @media screen and (max-width: 1200px) {
+                    display: none;
+                  }
                 `}
               >
                 <Agents
@@ -165,6 +325,82 @@ const Home: NextPage = () => {
                   <span>Cargos</span>
                 </Positions>
               </div>
+              <MobileChooseCategory>
+                <CategoryChoose>
+                  <div
+                    className={css`
+                      display: flex;
+                      justify-content: space-between;
+                      padding: 15px;
+                      width: 100%;
+                      border-radius: 9px;
+                      border: 2px solid #cad6d1;
+                      background: #ffffff;
+                      color: #34423d;
+                      :hover {
+                        cursor: pointer;
+                      }
+                    `}
+                    onClick={() => setCategoryChosen(true)}
+                  >
+                    Categorias <Image src={MoreIcon} />
+                  </div>
+                  {categoryChosen && (
+                    <>
+                      <div
+                        className={css`
+                          background: #ffffff;
+                          box-shadow: 0px 8px 24px rgba(165, 171, 179, 0.4);
+                          border-radius: 12px 12px 0px 0px;
+                          padding: 20px 20px;
+                          margin-top: -70px;
+                          position: relative;
+                          z-index: 1;
+                        `}
+                      >
+                        <div
+                          className={css`
+                            display: flex;
+                            width: 100%;
+                            align-items: center;
+                            justify-content: space-between;
+                          `}
+                        >
+                          <h1>Categorias</h1>
+                          <div
+                            className={css`
+                              padding: 5px 30px;
+                              :hover {
+                                cursor: pointer;
+                              }
+                            `}
+                            onClick={() => setCategoryChosen(false)}
+                          >
+                            <Image src={X} />
+                          </div>
+                        </div>
+                        <div>
+                          <Category
+                            onClick={() => {
+                              setTitleHome("Colaboradores"),
+                                setHomePage("agents");
+                            }}
+                          >
+                            Colaboradores
+                          </Category>
+                          <Category
+                            onClick={() => {
+                              setTitleHome("Cargos"), setHomePage("roles");
+                            }}
+                          >
+                            Cargos
+                          </Category>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </CategoryChoose>
+              </MobileChooseCategory>
             </div>
             <ListingOfAgents>
               <h4>Listagem de colaboradores</h4>
@@ -178,7 +414,7 @@ const Home: NextPage = () => {
               ) : (
                 roles?.roles?.map((item) => (
                   <RolesDetails
-                    userName={item?.name}
+                    position={item?.name}
                     departament={item?.departament}
                     collaborators={item?.agents_quantity}
                   />
@@ -188,7 +424,6 @@ const Home: NextPage = () => {
           </OrganizationContainer>
         </section>
       )}
- <Sidebar />
     </main>
   );
 };
@@ -242,8 +477,9 @@ const Positions = styled.div<OrganizationProps>(
 );
 const ListingOfAgents = styled.section`
   overflow-y: scroll;
-  height: 60vh;
-  padding-right: 20px;
+  height: 100vh;
+  padding-bottom: 400px;
+  padding-right: 10px;
   ::-webkit-scrollbar {
     width: 8px;
   }
@@ -272,6 +508,10 @@ const ListingOfAgentsDetails = styled.ul`
     margin-left: -39px;
     padding-left: 40px;
   }
+
+  @media screen and (max-width: 1200px) {
+    display: none;
+  }
 `;
 
 const ListingOfRolesDetails = styled.ul`
@@ -287,5 +527,34 @@ const ListingOfRolesDetails = styled.ul`
     margin-left: -39px;
     padding-left: 40px;
   }
+  @media screen and (max-width: 1200px) {
+    display: none;
+  }
 `;
 
+const MobileChooseCategory = styled.section`
+  @media screen and (min-width: 1200px) {
+    display: none;
+  }
+  @media screen and (max-width: 1200px) {
+    display: block;
+    display: flex;
+
+    padding-top: 30px;
+    padding-bottom: 30px;
+    border-bottom: 3px solid #eaefed;
+  }
+`;
+
+const CategoryChoose = styled.div`
+  margin: 0 auto;
+  width: 80%;
+`;
+
+const Category = styled.option`
+  padding-top: 20px;
+  padding-top: 20px;
+  :hover {
+    cursor: pointer;
+  }
+`;

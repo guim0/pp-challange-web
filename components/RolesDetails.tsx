@@ -42,7 +42,7 @@ export function RolesDetails({
         </li>
 
         <MoreButton isVisible={true}>
-          <Image src={MoreIcon} width={20} height={20} />
+          <Image src={MoreIcon} width={20} height={20} alt="Mais"/>
         </MoreButton>
       </Details>
 
@@ -61,7 +61,7 @@ export function RolesDetails({
             <SwitchDropdown onClick={() => setIsOpen(true)}>
               <>
                 <div>
-                  <Image src={ArrowDown} />
+                  <Image src={ArrowDown} alt="abrir"/>
                 </div>
               </>
             </SwitchDropdown>
@@ -70,7 +70,7 @@ export function RolesDetails({
             <SwitchDropdown onClick={() => setIsOpen(false)}>
               <>
                 <div>
-                  <Image src={ArrowUp} />
+                  <Image src={ArrowUp} alt="fechar" />
                 </div>
               </>
             </SwitchDropdown>

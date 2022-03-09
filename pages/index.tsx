@@ -165,7 +165,7 @@ const Home: NextPage = () => {
                   `}
                   onClick={() => setCategoryChosen(true)}
                 >
-                  Categorias <Image src={MoreIcon} />
+                  Categorias <Image src={MoreIcon} alt="icon"/>
                 </div>
                 {categoryChosen && (
                   <>
@@ -199,7 +199,7 @@ const Home: NextPage = () => {
                           `}
                           onClick={() => setCategoryChosen(false)}
                         >
-                          <Image src={X} />
+                          <Image src={X} alt="Fechar"/>
                         </div>
                       </div>
                       <div>
@@ -345,7 +345,7 @@ const Home: NextPage = () => {
                     `}
                     onClick={() => setCategoryChosen(true)}
                   >
-                    Categorias <Image src={MoreIcon} />
+                    Categorias <Image src={MoreIcon} alt="icon" />
                   </div>
                   {categoryChosen && (
                     <>
@@ -379,7 +379,7 @@ const Home: NextPage = () => {
                             `}
                             onClick={() => setCategoryChosen(false)}
                           >
-                            <Image src={X} />
+                            <Image src={X} alt="fechar" />
                           </div>
                         </div>
                         <div>

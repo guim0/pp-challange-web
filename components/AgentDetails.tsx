@@ -43,6 +43,7 @@ export function AgentDetails({
               src={userPhoto}
               width={40}
               height={40}
+              alt="Colaborador" 
             />
             <p className={styling`width:100%`}>{userName}</p>
           </div>
@@ -57,7 +58,7 @@ export function AgentDetails({
         </li>
       </Details>
       {/* <MoreButton isVisible={true}>
-        <Image src={MoreIcon} width={20} height={20} />
+        <Image src={MoreIcon} width={20} height={20} alt="mais"/>
       </MoreButton> */}
 
       <DetailsMobile>
@@ -75,7 +76,7 @@ export function AgentDetails({
             <SwitchDropdown onClick={() => setIsOpen(true)}>
               <>
                 <div>
-                  <Image src={ArrowDown} />
+                  <Image src={ArrowDown} alt="Abrir" />
                 </div>
               </>
             </SwitchDropdown>
@@ -84,7 +85,7 @@ export function AgentDetails({
             <SwitchDropdown onClick={() => setIsOpen(false)}>
               <>
                 <div>
-                  <Image src={ArrowUp} />
+                  <Image src={ArrowUp} alt="Fechar" />
                 </div>
               </>
             </SwitchDropdown>

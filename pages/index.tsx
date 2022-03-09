@@ -241,10 +241,9 @@ const Home: NextPage = () => {
               {agents?.items === undefined ? (
                 <>Um minuto...</>
               ) : (
-                agents?.items?.map((item) => (
-                  <div>
+                agents?.items.map((item) => (
+                  <div key={item?.agent_id}>
                     <AgentDetails
-                      key={item?.name}
                       userPhoto={item?.image}
                       userName={item?.name}
                       department={item?.department}

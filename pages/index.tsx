@@ -53,7 +53,6 @@ const Home: NextPage = () => {
     };
 
     fetchAgents();
-
     featchRoles();
   }, []);
 
@@ -65,7 +64,7 @@ const Home: NextPage = () => {
         background-color: #f8faf9;
       `}
     >
-      <Sidebar />
+
 
       {homePage === "agents" ? (
         <section
@@ -175,7 +174,7 @@ const Home: NextPage = () => {
                 <li>Colaboradores</li>
               </ListingOfRolesDetails>
               {agents?.items === undefined ? (
-                <>Um minuto...</>
+                <> Um minuto...</>
               ) : (
                 roles?.roles?.map((item) => (
                   <RolesDetails
@@ -189,6 +188,7 @@ const Home: NextPage = () => {
           </OrganizationContainer>
         </section>
       )}
+ <Sidebar />
     </main>
   );
 };

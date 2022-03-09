@@ -7,46 +7,20 @@ import styled from "styled-components";
 export default function Sidebar() {
   return (
     <Container>
-      <section
-        className={css`
-          max-width: 256px;
-          width: 100%;
-          height: 100vh;
-          border: 1px solid #eaefed;
-          background-color: white;
-          box-shadow: 0px 4px 8px rgba(165, 171, 179, 0.16);
-        `}
-      >
-        <div>
-          <div
-            className={css`
-              width: 100%;
-              padding: 15.5px;
-              padding-left: 30px;
-              border-bottom: 1px solid #eaefed;
-            `}
-          >
-            <Image src={LogoPP} alt="PP" />
-          </div>
-        </div>
-      </section>
-      <section
-        className={css`
-          width: 100%;
-          height: 75px;
-          padding: 20px;
-          border-bottom: 1px solid #eaefed;
-          background-color: white;
-          box-shadow: 0px 4px 8px rgba(165, 171, 179, 0.16);
-          display: flex;
-          justify-content: flex-end;
-          align-items: center;
-        `}
-      >
+      <SideLeftContainer>
+        <LogoDiv>
+          <Image src={LogoPP} alt="PP" />
+        </LogoDiv>
+      </SideLeftContainer>
+
+      <HeaderSection>
         <User>
           <UserLogo>LZ</UserLogo>
-          <div className={css`
-          line-height: 17px;`}>
+          <div
+            className={css`
+              line-height: 17px;
+            `}
+          >
             <span
               className={css`
                 color: #34423d;
@@ -65,7 +39,14 @@ export default function Sidebar() {
             </span>
           </div>
         </User>
-      </section>
+      </HeaderSection>
+
+      <HeaderMobile>
+        <UserLogo>LZ</UserLogo>
+        <LogoDiv>
+          <Image src={LogoPP} alt="PP" />
+        </LogoDiv>
+      </HeaderMobile>
     </Container>
   );
 }
@@ -75,10 +56,42 @@ const Container = styled.main`
   display: flex;
   flex-direction: row;
   position: fixed;
-z-index: -99;
+  z-index: -99;
   top: 0 !important;
   width: 100%;
+`;
+const SideLeftContainer = styled.section`
+  max-width: 256px;
+  width: 100%;
+  height: 100vh;
+  border: 1px solid #eaefed;
+  background-color: white;
+  box-shadow: 0px 4px 8px rgba(165, 171, 179, 0.16);
+  @media screen and (max-width: 1200px) {
+    display: none;
+  }
+`;
+const LogoDiv = styled.div`
+  width: 100%;
+  padding: 15.5px;
+  padding-left: 30px;
+  border-bottom: 1px solid #eaefed;
+`;
 
+const HeaderSection = styled.header`
+  width: 100%;
+  height: 75px;
+  padding: 20px;
+  border-bottom: 1px solid #eaefed;
+  background-color: white;
+  box-shadow: 0px 4px 8px rgba(165, 171, 179, 0.16);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  @media screen and (max-width: 1200px) {
+    display: none;
+  }
 `;
 
 const User = styled.div`
@@ -101,4 +114,21 @@ const UserLogo = styled.div`
   align-items: center;
   justify-content: center;
   background-color: #b5f1dd;
+`;
+
+const HeaderMobile = styled.section`
+  @media screen and (min-width: 1201px) {
+    display: none;
+  }
+  @media screen and (max-width: 1200px) {
+    width: 100%;
+    height: 75px;
+    padding: 20px;
+    border-bottom: 1px solid #eaefed;
+    background-color: white;
+    box-shadow: 0px 4px 8px rgba(165, 171, 179, 0.16);
+    display: flex;
+    align-items: center;
+   
+  }
 `;

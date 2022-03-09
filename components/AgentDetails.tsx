@@ -3,7 +3,7 @@ import Image from "next/image";
 import React from "react";
 import styled, { css } from "styled-components";
 import { BadgeStatus } from "./BadgeStatus";
-import MoreIcon from '../assets/icons/more.svg'
+import MoreIcon from "../assets/icons/more.svg";
 
 interface AgentDetailsProps {
   userPhoto: string;
@@ -28,23 +28,25 @@ export function AgentDetails({
 }: AgentDetailsProps) {
   return (
     <Container>
-      <Details  status={status}>
+      <Details status={status}>
         <li>
-          <div className={styling`display: flex; align-items: center;gap: 8px; max-width:180px`}>
+          <div
+            className={styling`display: flex; align-items: center;gap: 8px; max-width:170px`}
+          >
             <Image
               className={styling`border-radius:25px;`}
               src={userPhoto}
               width={40}
               height={40}
             />
-            <p className={styling`max-width: 180px`}>{userName}</p>
+            <p className={styling`width:100%`}>{userName}</p>
           </div>
         </li>
         <li>
           <span>{department}</span>
         </li>
         <li>{position}</li>
-        <li className={styling`max-width: 180px`}>{unit}</li>
+        <li className={styling`max-width: 150px`}>{unit}</li>
         <li>
           <BadgeStatus status={status} />
         </li>
@@ -67,7 +69,8 @@ const Details = styled.ul<AgentDetailsProps>(
     css`
       display: grid;
       margin-left: -35px;
-      grid-template-columns: 1.5fr 1.1fr 1fr 1.1fr 1fr;
+      grid-template-columns: 1.5fr 1.1fr 1fr 1.1fr 1.3fr;
+      width: 100%;
       list-style: none !important;
       align-items: center;
       ${status === "inactive"

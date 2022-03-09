@@ -1,6 +1,6 @@
 import { css } from "@emotion/css";
 import type { NextPage } from "next";
-import 'animate.css'
+import "animate.css";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import styled, { css as scss } from "styled-components";
@@ -134,14 +134,18 @@ const Home: NextPage = () => {
                 `}
               >
                 <Agents
-                  onClick={() => {setHomePage("agents")}}
-                  isActive={homePage === "agents" ?? true}  
+                  onClick={() => {
+                    setHomePage("agents");
+                  }}
+                  isActive={homePage === "agents" ?? true}
                 >
                   <span>Colaboradores</span>
                 </Agents>
                 <Positions
-                  onClick={() =>{ setHomePage("roles")}}
-                  isActive={homePage !== "agents" ?? true}  
+                  onClick={() => {
+                    setHomePage("roles");
+                  }}
+                  isActive={homePage !== "agents" ?? true}
                 >
                   <span>Cargos</span>
                 </Positions>
@@ -165,7 +169,7 @@ const Home: NextPage = () => {
                   `}
                   onClick={() => setCategoryChosen(true)}
                 >
-                  Categorias <Image src={MoreIcon} alt="icon"/>
+                  Categorias <Image src={MoreIcon} alt="icon" />
                 </div>
                 {categoryChosen && (
                   <>
@@ -199,7 +203,7 @@ const Home: NextPage = () => {
                           `}
                           onClick={() => setCategoryChosen(false)}
                         >
-                          <Image src={X} alt="Fechar"/>
+                          <Image src={X} alt="Fechar" />
                         </div>
                       </div>
                       <div>
@@ -227,7 +231,7 @@ const Home: NextPage = () => {
 
             <ListingOfAgents>
               <h4>Listagem de colaboradores</h4>
-              <ListingOfAgentsDetails >
+              <ListingOfAgentsDetails>
                 <li>Nome Completo</li>
                 <li>Departamento</li>
                 <li>Cargo</li>
@@ -238,15 +242,16 @@ const Home: NextPage = () => {
                 <>Um minuto...</>
               ) : (
                 agents?.items?.map((item) => (
-                  <div >
-                  <AgentDetails
-                    userPhoto={item?.image}
-                    userName={item?.name}
-                    department={item?.department}
-                    position={item?.role}
-                    unit={item?.branch}
-                    status={item?.status}
-                  />
+                  <div>
+                    <AgentDetails
+                      key={item?.agent_id}
+                      userPhoto={item?.image}
+                      userName={item?.name}
+                      department={item?.department}
+                      position={item?.role}
+                      unit={item?.branch}
+                      status={item?.status}
+                    />
                   </div>
                 ))
               )}
@@ -358,8 +363,7 @@ const Home: NextPage = () => {
                           margin-top: -70px;
                           position: relative;
                           z-index: 1;
-                          
-                        ` }
+                        `}
                       >
                         <div
                           className={css`
@@ -417,6 +421,7 @@ const Home: NextPage = () => {
               ) : (
                 roles?.roles?.map((item) => (
                   <RolesDetails
+                    key={item.name}
                     position={item?.name}
                     departament={item?.departament}
                     collaborators={item?.agents_quantity}
@@ -562,4 +567,4 @@ const Category = styled.option`
   }
 `;
 
-const TitleHomePage = styled.header``
+const TitleHomePage = styled.header``;

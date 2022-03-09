@@ -244,7 +244,7 @@ const Home: NextPage = () => {
                 agents?.items?.map((item) => (
                   <div>
                     <AgentDetails
-                      key={item?.agent_id}
+                      key={item?.name}
                       userPhoto={item?.image}
                       userName={item?.name}
                       department={item?.department}

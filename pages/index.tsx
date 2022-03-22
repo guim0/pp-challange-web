@@ -9,6 +9,8 @@ import { RolesDetails } from "../components/RolesDetails";
 import MoreIcon from "../assets/icons/more.svg";
 import X from "../assets/icons/x.svg";
 import Sidebar from "../components/Sidebar";
+import agents from "../service/agents.json";
+import roles from "../service/roles.json";
 
 interface OrganizationProps {
   isActive?: boolean;
@@ -37,29 +39,31 @@ interface GetRolesDetails {
 }
 const Home: NextPage = () => {
   const [organizationStatus, setOrganizationStatus] = useState<boolean>(false);
-  const [agents, getAgents] = useState<ItemsAgentsDetails>();
-  const [roles, getRoles] = useState<Roles>();
+
   const [homePage, setHomePage] = useState<string>("agents");
   const [categoryChosen, setCategoryChosen] = useState<boolean>(false);
   const [titleHome, setTitleHome] = useState<string>("");
 
-  useEffect(() => {
-    const fetchAgents = async () => {
-      const res = await fetch("https://pp-api-desafio.herokuapp.com/agents");
-      const dataAgents = await res.json();
-      getAgents(dataAgents);
-      console.log("dataAgents =>>", dataAgents);
-    };
+  //Here Happend the API calls, directly. But the API isn't Online.
+  //So here lies the forms of Methods use to integrated.
 
-    const featchRoles = async () => {
-      const res = await fetch("https://pp-api-desafio.herokuapp.com/roles");
-      const dataRoles = await res.json();
-      getRoles(dataRoles);
-    };
+  // useEffect(() => {
+  //  const fetchAgents = async () => {
+  //     const res = await fetch("https://pp-api-desafio.herokuapp.com/agents");
+  //     const dataAgents = await res.json();
+  //     getAgents(dataAgents);
+  //     console.log("dataAgents =>>", dataAgents);
+  //   };
 
-    fetchAgents();
-    featchRoles();
-  }, []);
+  //   const featchRoles = async () => {
+  //     const res = await fetch("https://pp-api-desafio.herokuapp.com/roles");
+  //     const dataRoles = await res.json();
+  //     getRoles(dataRoles);
+  //   };
+
+  //   fetchAgents();
+  //   featchRoles();
+  // }, []);
 
   return (
     <main
@@ -238,22 +242,18 @@ const Home: NextPage = () => {
                 <li>Unidade</li>
                 <li>Status</li>
               </ListingOfAgentsDetails>
-              {agents?.items === undefined ? (
-                <>Um minuto...</>
-              ) : (
-                agents?.items.map((item) => (
-                  <div key={item?.agent_id}>
-                    <AgentDetails
-                      userPhoto={item?.image}
-                      userName={item?.name}
-                      department={item?.department}
-                      position={item?.role}
-                      unit={item?.branch}
-                      status={item?.status}
-                    />
-                  </div>
-                ))
-              )}
+              {agents.items.map((item) => (
+                <div key={item?.agent_id}>
+                  <AgentDetails
+                    userPhoto={item?.image}
+                    userName={item?.name}
+                    department={item?.department}
+                    position={item?.role}
+                    unit={item?.branch}
+                    status={item?.status}
+                  />
+                </div>
+              ))}
             </ListingOfAgents>
           </OrganizationContainer>
         </section>
@@ -415,18 +415,14 @@ const Home: NextPage = () => {
                 <li>Departamento</li>
                 <li>Colaboradores</li>
               </ListingOfRolesDetails>
-              {agents?.items === undefined ? (
-                <> Um minuto...</>
-              ) : (
-                roles?.roles?.map((item) => (
-                  <RolesDetails
-                    key={item.name}
-                    position={item?.name}
-                    departament={item?.departament}
-                    collaborators={item?.agents_quantity}
-                  />
-                ))
-              )}
+              {roles.items.map((item) => (
+                <RolesDetails
+                  key={item.name}
+                  position={item?.name}
+                  departament={item?.departament}
+                  collaborators={item?.agents_quantity}
+                />
+              ))}
             </ListingOfAgents>
           </OrganizationContainer>
         </section>
